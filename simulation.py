@@ -111,7 +111,7 @@ def Nbody(Nparticles, positions_list, velocity_list, time, j):
         vel[i, 0] = velocity_list[i][0][j] #x velocity
         vel[i, 1] = velocity_list[i][1][j] #y velocity
     
-    
+    #creating 1D array of mass 
     mass = 1.6735575*10**(-24)*np.ones((N, 1))/N  # total mass is Hydrogen 
 
     # Convert to Center-of-Mass frame
@@ -131,16 +131,18 @@ def Nbody(Nparticles, positions_list, velocity_list, time, j):
     #position returns two arrays: one for x and one for y position
     return pos
 
-#creating list of particles
+#creating list of positions and velocities 
 position_list = []
 velocity_list = []
+#setting the number of particles 
 Nparticles = 5 
 
-#creating object
+#reading in the file and initializing the animation object 
 file = 's(0) radius red - s(0) radius red.csv'
 animation_sne = particles(file)
 time = animation_sne.time
 
+#getting list of positions and velocities from particles class 
 for i in np.linspace(0, 360, num = Nparticles): 
     print("angle:", i)
     position = animation_sne.pos(i)
@@ -150,29 +152,36 @@ for i in np.linspace(0, 360, num = Nparticles):
     velocity_list.append(velocity)
 
 
-%matplotlib tk
 
+#running the simulation
 fig, ax = plt.subplots(nrows=1, ncols=1)
+#need this to create an animation to save 
 camera = Camera(fig)
 ax.set_facecolor('black')
 t = 0
+#looping over the time length*2 because we are alternating between the SNR output and the Nbody sim
 while t < len(time)*2: 
-    
+
+    #plotting the SNR output
     if t%2 == 0: 
         t_ = t/2
-        data = np.ones((2, Nparticles+1))
+        data = np.ones((2, Nparticles))
         for i in range(Nparticles):  
             data[0, i] = (position_list[i][1][0][t_]) #x position
             data[1, i] = (position_list[i][0][0][t_]) #y position
         ax.scatter(data[0], data[1], c = 'white')
         camera.snap()
-    
+
+    #plotting the Nbody sim 
     else: 
+        #j tells us what position at time t are are on, hence why it is an argument in the Nbody 
         j = int((t-1)/2)
+        #position_list and velocity_list are global variables which are read in the Nbody sim which retrieves the positions and velocities for specific time t 
         Nbody_pos = Nbody(Nparticles, position_list, velocity_list, time, j)
-        ax.scatter(Nbody_pos[0], Nbody_pos[1], c = 'white')
+        ax.scatter(Nbody_pos[:,0], Nbody_pos[:,1], c = 'white')
         camera.snap()
     t+= 1
-        
+
+#saving animation 
 anim = camera.animate(blit=True)
-anim.save('dots.mp4')
+anim.save('supernova1987A.mp4')
