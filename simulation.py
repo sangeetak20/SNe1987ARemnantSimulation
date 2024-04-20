@@ -4,6 +4,7 @@ from matplotlib.animation import FFMpegWriter
 import pandas as pd
 import os
 from matplotlib.animation import FuncAnimation  
+from celluloid import Camera
 
 class particles(): 
     def __init__(self, file_name): 
@@ -56,7 +57,6 @@ def getAcc( pos, mass, G, softening):
     # positions r = [x,y,z] for all particles
     x = pos[:,0:1] 
     y = pos[:,1:2]
-    print("x shape:", x.shape)
     
     #indexing by pos[:,0:1] means that I am grabbing only the 0th row from that array 
     #indexing by pos[:,1:2] means that I am grabbing the 1st row from that array 
@@ -64,8 +64,6 @@ def getAcc( pos, mass, G, softening):
     # matrix that stores all pairwise particle separations: r_j - r_i
     dx = x.T - x  #x.T means that you are doing a transformation of x (linear algebra)
     dy = y.T - y
-    print("dx shape:",dx.shape)
-    print("x.T shape:", x.T.shape)
 
     # matrix that stores 1/r^3 for all particle pairwise particle separations 
     inv_r3 = (dx**2 + dy**2 + softening**2)
@@ -73,8 +71,6 @@ def getAcc( pos, mass, G, softening):
 
     ax = G * (dx * inv_r3) @ mass #@ symbol is the matrix multiplier 
     ay = G * (dy * inv_r3) @ mass
-    print("ax shape:",ax.shape)
-    print("mass shape", mass.shape)
     
     acceleration = np.hstack((ax, ay))
     return acceleration
@@ -125,8 +121,6 @@ def Nbody(Nparticles, positions_list, velocity_list, time, j):
     acc = getAcc( pos, mass, G, softening)
     #print(acc)
     
-    print("acceleration shape:", acc.shape)
-    print("velocity shape: ", vel.shape)
 
     # (1/2) kick
     vel += acc * dt/2.0
@@ -157,8 +151,6 @@ for i in np.linspace(0, 360, num = Nparticles):
 
 
 %matplotlib tk
-
-from celluloid import Camera
 
 fig, ax = plt.subplots(nrows=1, ncols=1)
 camera = Camera(fig)
