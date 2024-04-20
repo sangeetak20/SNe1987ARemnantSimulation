@@ -158,10 +158,12 @@ fig, ax = plt.subplots(nrows=1, ncols=1)
 #need this to create an animation to save 
 camera = Camera(fig)
 ax.set_facecolor('black')
+ax.set_xticks([])
+ax.set_yticks([])
 t = 0
 #looping over the time length*2 because we are alternating between the SNR output and the Nbody sim
 while t < len(time)*2: 
-
+    ax.set_title(f"Years After Explosion: {time[int(t/2)]}")
     #plotting the SNR output
     if t%2 == 0: 
         t_ = t/2
