@@ -16,7 +16,7 @@ class particles():
         time = file['Time/yr']
         #velocity =
         
-        self.position = position 
+        self.position = position*u.pc.to(u.m)
         self.time = time
         #self.velocity = velocity 
         
@@ -29,9 +29,9 @@ class particles():
         return self.xpos, self.ypos
     
     def vel(self, pos_x, pos_y):
-        #posx_m = pos_x*u.pc.to(u.m) #internally to function convert the position data from pc to m
-        #posy_m = pos_y*u.pc.to(u.m)
-        #time_s = self.time*u.yr.to(u.s) #internally to function convert the time data from yr to s
+        posx_m = pos_x*u.pc.to(u.m) #internally to function convert the position data from pc to m
+        posy_m = pos_y*u.pc.to(u.m)
+        time_s = self.time*u.yr.to(u.s) #internally to function convert the time data from yr to s
 
 
 
