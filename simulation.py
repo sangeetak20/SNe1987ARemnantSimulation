@@ -5,6 +5,7 @@ import pandas as pd
 import os
 from matplotlib.animation import FuncAnimation  
 from celluloid import Camera
+import astropy.units as u
 
 class particles(): 
     def __init__(self, file_name): 
