@@ -1,9 +1,7 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-from matplotlib.animation import FFMpegWriter
 import pandas as pd
 import os
-from matplotlib.animation import FuncAnimation  
 from celluloid import Camera
 import astropy.units as u
 
