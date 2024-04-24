@@ -9,7 +9,7 @@ class particles():
     def __init__(self, file_name): 
         #write code to read in csv file 
         file = pd.read_csv(file_name, header = 0)
-        file.set_axis(["Time/yr", "Radius/pc"], axis=1, inplace=True) #inputs labels for the axes of the csv file for calling later
+        
         #defining variables that will be used throughout the code 
         position = file['Radius/pc']
         time = file['Time/yr']
