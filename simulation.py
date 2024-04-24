@@ -9,7 +9,7 @@ class particles():
     def __init__(self, file_name): 
         #write code to read in csv file 
         file = pd.read_csv(file_name, header = 0)
-        
+        file.set_axis(["Time/yr", "Radius/pc"], axis=1, inplace=True) #inputs labels for the axes of the csv file for calling later
         #defining variables that will be used throughout the code 
         position = file['Radius/pc']
         time = file['Time/yr']
@@ -185,4 +185,4 @@ while t < len(time)*2:
 
 #saving animation 
 anim = camera.animate(blit=True)
-anim.save('supernova1987A.mp4')
+anim.save('supernova1987A.mp4') #can alternatively save as .gif if .mp4 does not save to your device
