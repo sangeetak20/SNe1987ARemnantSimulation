@@ -162,7 +162,9 @@ ax.set_yticks([])
 t = 0
 #looping over the time length*2 because we are alternating between the SNR output and the Nbody sim
 while t < len(time)*2: 
-    ax.set_title(f"Years After Explosion: {time[int(t/2)]}")
+    current_time_index = int(t/2)
+    current_time = time[current_time_index]
+    plt.text(0.5,1.5,f"Years After Explosion: {current_time}", c = 'k', ha = 'center', va = 'center', transform = ax.transAxes)
     #plotting the SNR output
     if t%2 == 0: 
         t_ = t/2
@@ -170,7 +172,7 @@ while t < len(time)*2:
         for i in range(Nparticles):  
             data[0, i] = (position_list[i][1][0][t_]) #x position
             data[1, i] = (position_list[i][0][0][t_]) #y position
-        ax.scatter(data[0], data[1], c = 'white')
+        plt.scatter(data[0], data[1], c = 'white')
         camera.snap()
 
     #plotting the Nbody sim 
@@ -179,7 +181,7 @@ while t < len(time)*2:
         j = int((t-1)/2)
         #position_list and velocity_list are global variables which are read in the Nbody sim which retrieves the positions and velocities for specific time t 
         Nbody_pos = Nbody(Nparticles, position_list, velocity_list, time, j)
-        ax.scatter(Nbody_pos[:,0], Nbody_pos[:,1], c = 'white')
+        plt.scatter(Nbody_pos[:,0], Nbody_pos[:,1], c = 'white')
         camera.snap()
     t+= 1
 
