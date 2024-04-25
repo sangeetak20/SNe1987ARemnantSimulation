@@ -175,7 +175,7 @@ while t < len(time)*2:
         for i in range(Nparticles):  
             data[0, i] = (position_list[i][1][0][t_]) #x position
             data[1, i] = (position_list[i][0][0][t_]) #y position
-        plt.scatter(data[0], data[1], c = 'white')
+        plt.scatter(data[0], data[1], c = 'white', s = 0.5)
         camera.snap()
 
     #plotting the Nbody sim 
@@ -184,7 +184,7 @@ while t < len(time)*2:
         j = int((t-1)/2)
         #position_list and velocity_list are global variables which are read in the Nbody sim which retrieves the positions and velocities for specific time t 
         Nbody_pos = Nbody(Nparticles, position_list, velocity_list, time, j)
-        plt.scatter(Nbody_pos[:,0], Nbody_pos[:,1], c = 'white')
+        plt.scatter(Nbody_pos[:,0], Nbody_pos[:,1], c = 'white', s = 0.5)
         camera.snap()
     t+= 1
 
