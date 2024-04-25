@@ -15,6 +15,7 @@ class particles():
         time = file['Time/yr']
         #velocity =
         
+        self.position_pc = position
         self.position = position*u.pc.to(u.m)
         self.time = time
         #self.velocity = velocity 
@@ -140,6 +141,7 @@ Nparticles = 5
 file = 's(0) radius red - s(0) radius red.csv'
 animation_sne = particles(file)
 time = animation_sne.time
+position_parsec = animation_sne.position_pc
 
 #getting list of positions and velocities from particles class 
 for i in np.linspace(0, 360, num = Nparticles): 
@@ -164,8 +166,8 @@ t = 0
 while t < len(time)*2: 
     current_time_index = int(t/2)
     current_time = time[current_time_index]
-    ax.text(0.5,1.05,f"Years After Explosion: {time[int(t/2)]}", c = 'k', ha = 'center', va = 'center', transform = ax.transAxes)
-    ax.text(0.5, -0.1, f"Radius: {position_list[0][0][0][int(t/2)]}", c = 'k', ha = 'center', va = 'center', transform = ax.transAxes)
+    ax.text(0.5,1.05,f"Years After Explosion: {round(time[int(t/2)], 2)}", c = 'k', ha = 'center', va = 'center', transform = ax.transAxes)
+    ax.text(0.5, -0.1, f"Radius (pc): {round(position_parsec[int(t/2)], 2)}", c = 'k', ha = 'center', va = 'center', transform = ax.transAxes)
     #plotting the SNR output
     if t%2 == 0: 
         t_ = t/2
